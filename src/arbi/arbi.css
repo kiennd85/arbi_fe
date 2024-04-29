@@ -1,0 +1,48 @@
+.button-3 {
+    appearance: none;
+    background-color: #2ea44f;
+    border: 1px solid rgba(27, 31, 35, .15);
+    border-radius: 4px;
+    box-shadow: rgba(27, 31, 35, .1) 0 1px 0;
+    color: #fff;
+    cursor: pointer;
+    font-size: 0.8rem;
+    height: 20px;
+   }
+.button-3:hover {
+    background-color: #2c974b;
+  }
+
+.button-1 {
+    background-color: #EA4C89;
+    border-radius: 4px;
+    border-style: none;
+    box-sizing: border-box;
+    color: #FFFFFF;
+    cursor: pointer;
+    font-size: 0.8rem;
+    height: 20px;
+  }
+  
+.button-1:hover,
+.button-1:focus {
+    background-color: #F082AC;
+  }  
+
+.button-32 {
+    background-color: #fa6400;
+    box-shadow: rgba(0, 0, 0, 0.02) 0 1px 3px 0;
+    border-radius: 4px;
+    border-style: none;
+    box-sizing: border-box;
+    color: #FFFFFF;
+    cursor: pointer;
+    font-size: 0.8rem;
+    height: 20px;
+
+  }
+.button-5:hover,
+.button-5:focus {
+    background-color: #fb8332;
+    box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
+  }
