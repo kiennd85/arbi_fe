@@ -58,13 +58,14 @@ const FormArbi = ({ records }) => {
       case 'price':
         return {
           textAlign: 'right',
+          fontSize: '0.8rem',
         };
       default:
     }
   };
 
   const style_btn = (gain) => {
-    return { display: gain > -0.5 ? '' : 'none' };
+    return { display: gain > -1 ? '' : 'none' };
   };
 
   const flex = {
@@ -76,9 +77,19 @@ const FormArbi = ({ records }) => {
     price: '65px',
     gain: '55px',
   };
+
+  const span = {
+    sec_1_amountA: 1,
+    sec_1_price: 3,
+    sec_1_amountB: 2,
+    price: 2,
+    gain: 1,
+    name: 2,
+    qty: 2,
+  };
   return (
-    <div>
-      <div style={{ width: '750px', paddingLeft: '10px' }}>
+    <div style={{}}>
+      <div style={{ width: '700px', paddingLeft: '10px' }}>
         <div>
           <Space>
             <Text> Update:</Text>
@@ -98,16 +109,16 @@ const FormArbi = ({ records }) => {
               style={style({ type: 'row', gain: item.gain })}
               align={'top'}
             >
-              <Col flex={flex.amount_1} style={style({ type: 'amountA' })}>
+              <Col span={span.amountA} style={style({ type: 'amountA' })}>
                 {item.sec_1.amountA}
               </Col>
-              <Col flex={flex.price} style={style({ type: 'price' })}>
+              <Col span={span.sec_1_price} style={style({ type: 'price' })}>
                 {round_number(item.sec_1.price, 'price')}
               </Col>
-              <Col flex={flex.amount_2} style={style({ type: 'amountB' })}>
+              <Col span={span.sec_1_amountB} style={style({ type: 'amountB' })}>
                 {round_number(item.sec_1.amountB, 'qty')}
               </Col>
-              <Col flex={flex.token} style={style({ type: 'token' })}>
+              <Col span={span.token} style={style({ type: 'token' })}>
                 <div>
                   <div>{item.sec_1.tokenB}</div>
                   <button className="button-3" style={style_btn(item.gain)}>
@@ -116,12 +127,12 @@ const FormArbi = ({ records }) => {
                 </div>
               </Col>
               <Col
-                flex={flex.name}
+                span={span.name}
                 style={style({ type: 'name', name: item.sec_1.name })}
               >
                 {item.sec_1.name}
               </Col>
-              <Col flex={flex.token} style={style({ type: 'token' })}>
+              <Col span={span.token} style={style({ type: 'token' })}>
                 <div>
                   <div>{item.sec_3.tokenA}</div>
                   <button className="button-1" style={style_btn(item.gain)}>
@@ -130,33 +141,33 @@ const FormArbi = ({ records }) => {
                 </div>
               </Col>
               <Col
-                flex={flex.name}
+                span={span.name}
                 style={style({ type: 'name', name: item.sec_3.name })}
               >
                 {item.sec_3.name}
               </Col>
-              <Col flex={flex.price} style={style({ type: 'price' })}>
+              <Col span={span.price} style={style({ type: 'price' })}>
                 {round_number(item.sec_3.price, 'price')}
               </Col>
 
               <Col
-                flex={flex.gain}
+                span={span.gain}
                 style={style({ type: 'gain', gain: item.gain })}
               >
                 {`${round_number(item.gain, 'gain')}u`}
               </Col>
               <Divider type="vertical" />
-              <Col flex={flex.price}>
+              <Col span={span.price}>
                 {round_number(item.sec_3.last_price, 'price')}
               </Col>
               <Col
-                flex={flex.gain}
+                span={span.gain}
                 style={style({ type: 'gain', gain: item.gain_last_price })}
               >
                 {round_number(item.gain_last_price, 'gain')}u
               </Col>
 
-              <Col flex={flex.name}>
+              <Col span={span.name}>
                 <div>
                   <div>{item.sec_2.name}</div>
                   <button className="button-32" style={style_btn(item.gain)}>
@@ -164,7 +175,7 @@ const FormArbi = ({ records }) => {
                   </button>
                 </div>
               </Col>
-              <Col flex={flex.price} style={style({ type: 'price' })}>
+              <Col span={span.price} style={style({ type: 'price' })}>
                 {round_number(item.sec_2.price, 'price')}
               </Col>
             </Row>
