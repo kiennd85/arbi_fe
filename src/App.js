@@ -72,6 +72,9 @@ function App() {
         <Space>
           <FormArbi records={records} />
         </Space>
+        {/* <Space>
+          <FormArbi records={records} />
+        </Space> */}
       </div>
     </div>
   );

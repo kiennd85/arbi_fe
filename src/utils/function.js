@@ -33,3 +33,30 @@ export const get_token = async () => {
 };
 
 //console.log(get_token());
+export const round_number = (number, type) => {
+  if (number) {
+    number = parseFloat(number);
+    switch (type) {
+      case 'gain':
+        return number.toFixed(1);
+      case 'qty':
+        return number.toFixed(0);
+      default:
+        return number > 1 ? number.toFixed(2) : number.toFixed(6);
+    }
+  }
+};
+
+export const round_num = ({ type, number }) => {
+  if (number) {
+    number = parseFloat(number);
+    switch (type) {
+      case 'gain':
+        return number.toFixed(1);
+      case 'qty':
+        return number.toFixed(0);
+      default:
+        return number > 1 ? number.toFixed(2) : number.toFixed(6);
+    }
+  }
+};
