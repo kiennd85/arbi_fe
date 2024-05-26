@@ -34,16 +34,12 @@ function App() {
         //console.log(event.data);
         set_records((prev) => {
           new_records.data.forEach((item) => {
-            if (
-              item.notification.to_tele === 'yes' &&
-              item.gain >= item.notification.level
-            ) {
+            if (item.notification.to_tele === 'yes' && item.gain >= item.notification.level) {
               mp3.play();
             }
           });
           new_records.elapsed =
-            new Date(new_records.timestamp).getTime() / 1000 -
-            new Date(prev.timestamp).getTime() / 1000;
+            new Date(new_records.timestamp).getTime() / 1000 - new Date(prev.timestamp).getTime() / 1000;
           return new_records;
         });
         //set_elapsed((prev) => )
@@ -61,14 +57,8 @@ function App() {
       <div>
         <Space>
           <span>Socket Status: </span>
-          <Text type={ws_status === 'Open' ? 'success' : 'danger'}>
-            {ws_status}
-          </Text>
-          <Button
-            onClick={openConnect}
-            type="primary"
-            disabled={ws_status === 'Open' ? true : false}
-          >
+          <Text type={ws_status === 'Open' ? 'success' : 'danger'}>{ws_status}</Text>
+          <Button onClick={openConnect} type="primary" disabled={ws_status === 'Open' ? true : false}>
             Connect
           </Button>
         </Space>
