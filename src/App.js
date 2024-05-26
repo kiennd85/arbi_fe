@@ -11,6 +11,12 @@ function App() {
   const [ws_status, set_ws_status] = useState('Close');
   const [records, set_records] = useState(records_default);
 
+  // const job = CronJob.from({
+  //   cronTime: '*/30 * * * * *',
+  //   onTick: ping,
+  //   start: true,
+  // });
+
   const openConnect = () => {
     const url = process.env.REACT_APP_URL;
 

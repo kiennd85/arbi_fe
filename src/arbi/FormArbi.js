@@ -80,13 +80,15 @@ const FormArbi = ({ records }) => {
       <div style={{ width: '620px', paddingLeft: '10px' }}>
         <div>
           <Space>
-            <Text> Update:</Text>
-            <Text>
+            <Text style={{ fontSize: '1.5rem' }}> Update:</Text>
+            <Text style={{ fontSize: '1.5rem' }}>
               {records.timestamp
                 ? convert_timestampstring_to_string(records.timestamp)
                 : 'No data'}
             </Text>
-            <Text>{`, elapsed: ${records.elapsed.toFixed(2)}s`}</Text>
+            <Text
+              style={{ fontSize: '1.5rem' }}
+            >{`, elapsed: ${records.elapsed.toFixed(2)}s`}</Text>
           </Space>
         </div>
         <div>
