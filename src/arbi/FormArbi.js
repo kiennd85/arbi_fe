@@ -1,8 +1,5 @@
 import { Col, Row, Space, Typography } from 'antd';
-import {
-  convert_timestampstring_to_string,
-  round_num,
-} from '../utils/function';
+import { convert_timestampstring_to_string, round_num } from '../utils/function';
 import { LV1, LV2 } from './constants';
 
 const { Text } = Typography;
@@ -21,12 +18,13 @@ const FormArbi = ({ records }) => {
       }
     }
   };
-  const style = ({ type, gain, name }) => {
+  const style = ({ type, gain, name, tele }) => {
     switch (type) {
       case 'row':
         return {
           borderTop: '1px solid lightgray',
-          backgroundColor: gain > LV2 ? '#FFFF99' : gain > LV1 ? 'skyblue' : '',
+          backgroundColor:
+            tele !== 'yes' ? '' : gain > LV2 ? '#FFFF99' : gain > LV1 ? 'skyblue' : '',
           //textAlign: 'right',
           //paddingBottom: '3px',
         };
@@ -82,106 +80,172 @@ const FormArbi = ({ records }) => {
           <Space>
             <Text style={{ fontSize: '1.5rem' }}> Update:</Text>
             <Text style={{ fontSize: '1.5rem' }}>
-              {records.timestamp
-                ? convert_timestampstring_to_string(records.timestamp)
-                : 'No data'}
+              {records.timestamp ? convert_timestampstring_to_string(records.timestamp) : 'No data'}
             </Text>
-            <Text
-              style={{ fontSize: '1.5rem' }}
-            >{`, elapsed: ${records.elapsed.toFixed(2)}s`}</Text>
+            <Text style={{ fontSize: '1.5rem' }}>{`, elapsed: ${records.elapsed.toFixed(
+              2
+            )}s`}</Text>
           </Space>
         </div>
         <div>
-          {records.data.map((item) => (
-            <Row
-              key={item.code}
-              gutter={[16, 0]}
-              style={style({ type: 'row', gain: item.gain })}
-              align={'middle'}
-            >
-              <Col span={span.amountA}>
-                <div style={style({ type: 'amountA' })}>
-                  {item.sec_1.amountA}
-                </div>
-              </Col>
+          {records.data.map((item) => {
+            if (item.arbitrage == 3) {
+              return (
+                <Row
+                  key={item.code}
+                  gutter={[16, 0]}
+                  style={style({ type: 'row', gain: item.gain })}
+                  align={'middle'}
+                >
+                  <Col span={span.amountA}>
+                    <div style={style({ type: 'amountA' })}>{item.sec_1.amountA}</div>
+                  </Col>
 
-              <Col span={span.buy}>
-                <div style={{ display: 'flex', flexDirection: 'column' }}>
-                  <div style={{ fontSize: '0.7rem', fontWeight: 'bold' }}>
-                    {round_num({ number: item.sec_1.price })}
-                  </div>
-                  <div
-                    style={{
-                      fontSize: '0.7rem',
-                      fontWeight: 'bold',
-                    }}
-                  >
-                    {round_num({ type: 'qty', number: item.sec_1.amountB })}
-                  </div>
-                </div>
-              </Col>
+                  <Col span={span.buy}>
+                    <div style={{ display: 'flex', flexDirection: 'column' }}>
+                      <div style={{ fontSize: '0.7rem', fontWeight: 'bold' }}>
+                        {round_num({ number: item.sec_1.price })}
+                      </div>
+                      <div
+                        style={{
+                          fontSize: '0.7rem',
+                          fontWeight: 'bold',
+                        }}
+                      >
+                        {round_num({ type: 'qty', number: item.sec_1.amountB })}
+                      </div>
+                    </div>
+                  </Col>
 
-              <Col span={span.token}>
-                <div>
-                  <Space>
-                    <span style={style({ type: 'token' })}>
-                      {item.sec_1.tokenB}
-                    </span>
-                    <span
-                      style={style({ type: 'name', name: item.sec_1.name })}
-                    >
-                      {item.sec_1.name}
-                    </span>
-                  </Space>
-                </div>
-              </Col>
+                  <Col span={span.token}>
+                    <div>
+                      <Space>
+                        <span style={style({ type: 'token' })}>{item.sec_1.tokenB}</span>
+                        <span style={style({ type: 'name', name: item.sec_1.name })}>
+                          {item.sec_1.name}
+                        </span>
+                      </Space>
+                    </div>
+                  </Col>
 
-              <Col span={span.token}>
-                <div>
-                  <Space>
-                    <span style={style({ type: 'token' })}>
-                      {item.sec_3.tokenA}
-                    </span>
-                    <span
-                      style={style({ type: 'name', name: item.sec_3.name })}
-                    >
-                      {item.sec_3.name}
-                    </span>
-                  </Space>
-                </div>
-              </Col>
+                  <Col span={span.token}>
+                    <div>
+                      <Space>
+                        <span style={style({ type: 'token' })}>{item.sec_3.tokenA}</span>
+                        <span style={style({ type: 'name', name: item.sec_3.name })}>
+                          {item.sec_3.name}
+                        </span>
+                      </Space>
+                    </div>
+                  </Col>
 
-              <Col span={span.price}>
-                <div style={{ width: '100%', display: 'flex' }}>
-                  <div style={style({ type: 'price' })}>
-                    {round_number(item.sec_3.price, 'price')}
-                  </div>
-                  <div style={style({ type: 'gain', gain: item.gain })}>
-                    {`${round_number(item.gain, 'gain')}u`}
-                  </div>
-                </div>
-              </Col>
-              <Col span={span.price}>
-                <div style={{ width: '100%', display: 'flex' }}>
-                  <div style={style({ type: 'price' })}>
-                    {round_number(item.sec_3.last_price, 'price')}
-                  </div>
-                  <div style={style({ type: 'gain', gain: item.gain })}>
-                    {`${round_number(item.gain_last_price, 'gain')}u`}
-                  </div>
-                </div>
-              </Col>
+                  <Col span={span.price}>
+                    <div style={{ width: '100%', display: 'flex' }}>
+                      <div style={style({ type: 'price' })}>
+                        {round_number(item.sec_3.price, 'price')}
+                      </div>
+                      <div style={style({ type: 'gain', gain: item.gain })}>
+                        {`${round_number(item.gain, 'gain')}u`}
+                      </div>
+                    </div>
+                  </Col>
+                  <Col span={span.price}>
+                    <div style={{ width: '100%', display: 'flex' }}>
+                      <div style={style({ type: 'price' })}>
+                        {round_number(item.sec_3.last_price, 'price')}
+                      </div>
+                      <div style={style({ type: 'gain', gain: item.gain })}>
+                        {`${round_number(item.gain_last_price, 'gain')}u`}
+                      </div>
+                    </div>
+                  </Col>
 
-              <Col span={span.swap}>
-                <Space>
-                  <div>{item.sec_2.name}</div>
-                  <div style={style({ type: 'price' })}>
-                    {round_number(item.sec_2.price, 'price')}
-                  </div>
-                </Space>
-              </Col>
-            </Row>
-          ))}
+                  <Col span={span.swap}>
+                    <Space>
+                      <div>{item.sec_2.name}</div>
+                      <div style={style({ type: 'price' })}>
+                        {round_number(item.sec_2.price, 'price')}
+                      </div>
+                    </Space>
+                  </Col>
+                </Row>
+              );
+            } else if (item.arbitrage == 2) {
+              const price_1 = item.sec_2.amountB / item.sec_2.amountA;
+              return (
+                <Row
+                  key={item.code}
+                  gutter={[16, 0]}
+                  style={style({ type: 'row', gain: item.gain, tele: item.notification.to_tele })}
+                  align={'middle'}
+                >
+                  <Col span={span.amountA}>
+                    <div style={style({ type: 'amountA' })}>{item.sec_1.amountA}</div>
+                  </Col>
+
+                  <Col span={span.buy}>
+                    <div style={{ display: 'flex', flexDirection: 'column' }}>
+                      <div style={{ fontSize: '0.7rem', fontWeight: 'bold' }}>
+                        {round_num({ number: item.sec_1.price })}
+                      </div>
+                      <div
+                        style={{
+                          fontSize: '0.7rem',
+                          fontWeight: 'bold',
+                        }}
+                      >
+                        {round_num({ type: 'qty', number: item.sec_1.amountB })}
+                      </div>
+                    </div>
+                  </Col>
+
+                  <Col span={span.token}>
+                    <div>
+                      <Space>
+                        <span style={style({ type: 'token' })}>{item.sec_1.tokenB}</span>
+                        <span style={style({ type: 'name', name: item.sec_1.name })}>
+                          {item.sec_1.name}
+                        </span>
+                      </Space>
+                    </div>
+                  </Col>
+
+                  <Col span={span.token}>
+                    <div>
+                      <Space>
+                        <span style={style({ type: 'token' })}>{item.sec_2.tokenB}</span>
+                        <span style={style({ type: 'name', name: item.sec_2.name })}>
+                          {item.sec_2.name}
+                        </span>
+                      </Space>
+                    </div>
+                  </Col>
+
+                  <Col span={span.price}>
+                    <div style={{ width: '100%', display: 'flex' }}>
+                      <div style={style({ type: 'price' })}>{round_number(price_1, 'price')}</div>
+                      <div style={style({ type: 'gain', gain: item.gain })}>
+                        {`${round_number(item.gain, 'gain')}u`}
+                      </div>
+                    </div>
+                  </Col>
+
+                  <Col span={span.price}>
+                    <div style={{ width: '100%', display: 'flex' }}>
+                      <div style={style({ type: 'price' })}>
+                        {round_number(item.sec_2.last_price, 'price')}
+                      </div>
+                      <div style={style({ type: 'gain', gain: item.gain })}>
+                        {item.gain_last_price
+                          ? `${round_number(item.gain_last_price, 'gain')}u`
+                          : ''}
+                      </div>
+                    </div>
+                  </Col>
+                </Row>
+              );
+            }
+          })}
         </div>
       </div>
     </div>
