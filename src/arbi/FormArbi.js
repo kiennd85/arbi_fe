@@ -18,13 +18,18 @@ const FormArbi = ({ records }) => {
       }
     }
   };
-  const style = ({ type, gain, name, tele }) => {
+  const style = ({ type, gain, name, disable_warning }) => {
     switch (type) {
       case 'row':
         return {
           borderTop: '1px solid lightgray',
-          backgroundColor:
-            tele !== 'yes' ? '' : gain > LV2 ? '#FFFF99' : gain > LV1 ? 'skyblue' : '',
+          backgroundColor: disable_warning
+            ? ''
+            : gain > LV2
+            ? '#FFFF99'
+            : gain > LV1
+            ? 'skyblue'
+            : '',
           //textAlign: 'right',
           //paddingBottom: '3px',
         };
@@ -176,7 +181,11 @@ const FormArbi = ({ records }) => {
                 <Row
                   key={item.code}
                   gutter={[16, 0]}
-                  style={style({ type: 'row', gain: item.gain, tele: item.notification.to_tele })}
+                  style={style({
+                    type: 'row',
+                    gain: item.gain,
+                    disable_warning: item.notification?.disable_warning,
+                  })}
                   align={'middle'}
                 >
                   <Col span={span.amountA}>
